@@ -110,7 +110,32 @@ python -m app.seed      # comando único: dropa, recria e popula o SQLite
 > funciona normalmente — a demo nunca quebra ali.
 
 O frontend lê a URL do backend em `frontend/.env` (`VITE_API_URL`, default
-`http://localhost:8000`).
+`http://localhost:8000`). Em produção (mesma origem) ele chama `/api/...`.
+
+---
+
+## Deploy (Vercel)
+
+O projeto sobe como **um único projeto Vercel**: o frontend (Vite) é buildado e a
+**própria FastAPI serve o `dist/`** além das rotas `/api/...` (via
+[`api/index.py`](api/index.py) + [`vercel.json`](vercel.json)). O SQLite roda em
+`/tmp` e o seed/auto-reseed recria os dados a cada cold start — a demo abre sempre
+fresca. Não depende do roteamento estático da Vercel.
+
+**Passos:**
+
+1. Em [vercel.com/new](https://vercel.com/new), importe o repositório do GitHub.
+   O `vercel.json` já define build, função Python e rotas — não precisa mexer.
+2. **Environment Variables** (Settings → Environment Variables), com escopo
+   **Production**:
+   - `OPENAI_API_KEY` = sua chave da OpenAI (sem aspas) — habilita o assistente.
+   - `OPENAI_MODEL` = `gpt-4o-mini` *(opcional, mais barato)*.
+3. **Deploy.** Cada `git push` na `main` redeploya automaticamente.
+
+> ⚠️ Variáveis de ambiente só valem em deploys **criados depois** de você as
+> cadastrar. Se adicionar/alterar a chave, faça um **Redeploy** (Deployments →
+> ⋯ → Redeploy) — senão o assistente continua "indisponível". Confira em
+> `/api/health`: deve mostrar `"assistente_ia":"openai"` e o modelo.
 
 ---
 
