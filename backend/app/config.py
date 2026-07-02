@@ -19,9 +19,11 @@ load_dotenv(BACKEND_DIR / ".env")
 
 # --- Banco -----------------------------------------------------------------
 # POC: SQLite num arquivo local, zero-config.
-# PRODUÇÃO: trocaríamos por algo como
+# Em serverless (Vercel) só /tmp é gravável — por isso o caminho é configurável
+# via C12H_DB_PATH. O seed/auto-reseed recria o banco a cada cold start.
+# PRODUÇÃO real: trocaríamos por algo como
 #   DATABASE_URL = "postgresql+psycopg://user:pass@host:5432/c12h"
-DB_PATH = BACKEND_DIR / "c12h.db"
+DB_PATH = Path(os.getenv("C12H_DB_PATH", str(BACKEND_DIR / "c12h.db")))
 DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 # --- Assistente de IA (OpenAI) ---------------------------------------------

@@ -1,0 +1,7 @@
+# Dependências da função serverless da Vercel (backend FastAPI).
+# uvicorn não entra: a Vercel provê o servidor ASGI.
+fastapi==0.115.6
+SQLAlchemy==2.0.36
+pydantic==2.10.4
+python-dotenv==1.0.1
+openai>=1.40.0,<2.0.0

@@ -1,5 +1,11 @@
 // Camada fina de acesso ao backend FastAPI.
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// - Dev: backend local em :8000.
+// - Produção (Vercel): mesma origem — as chamadas vão para /api/... e o
+//   vercel.json roteia para a função serverless. Dá pra sobrescrever com
+//   VITE_API_URL se o backend estiver noutro host.
+const BASE =
+  import.meta.env.VITE_API_URL ??
+  (import.meta.env.DEV ? "http://localhost:8000" : "");
 
 async function get(path) {
   const res = await fetch(`${BASE}${path}`);
