@@ -1,0 +1,9 @@
+# Central de Inteligência Operacional (C12H) — backend
+# POC: SQLite + FastAPI. Em produção, trocaríamos SQLite por PostgreSQL.
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+SQLAlchemy==2.0.36
+pydantic==2.10.4
+python-dotenv==1.0.1
+# Assistente de IA (única chamada externa da POC).
+openai>=1.40.0,<2.0.0

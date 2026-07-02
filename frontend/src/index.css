@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Tokens em canais RGB (para o Tailwind aplicar opacidade: rgb(var(--x) / 0.4)). */
+
+  /* Tema CLARO (padrão) — inspirado no site da Camisetas em 12 Horas. */
+  :root {
+    --color-base: 246 247 251;
+    --color-surface: 255 255 255;
+    --color-surface-2: 239 241 247;
+    --color-line: 228 231 240;
+    --color-primary: 23 26 43;
+    --color-secondary: 107 114 128;
+    --color-accent: 124 58 237;
+    --color-accent-2: 109 40 217;
+    --color-accent-soft: 237 233 254;
+    --sla-verde: 22 163 74;
+    --sla-amarelo: 217 119 6;
+    --sla-vermelho: 220 38 38;
+    --scrollbar-thumb: 214 218 230;
+    --glow: 124 58 237;
+    color-scheme: light;
+  }
+
+  /* Tema ESCURO — base premium escura + acento roxo (estilo Linear/Vercel). */
+  .dark {
+    --color-base: 10 10 15;
+    --color-surface: 20 20 27;
+    --color-surface-2: 30 30 40;
+    --color-line: 35 35 48;
+    --color-primary: 245 245 247;
+    --color-secondary: 156 163 175;
+    --color-accent: 139 92 246;
+    --color-accent-2: 167 139 250;
+    --color-accent-soft: 33 27 51;
+    --sla-verde: 34 197 94;
+    --sla-amarelo: 245 158 11;
+    --sla-vermelho: 239 68 68;
+    --scrollbar-thumb: 45 45 60;
+    --glow: 139 92 246;
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-base text-primary font-sans antialiased;
+    margin: 0;
+    /* leve glow roxo nos cantos — sutil no claro, premium no escuro */
+    background-image: radial-gradient(
+        1100px 520px at 85% -10%,
+        rgb(var(--glow) / 0.07),
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 480px at -10% 0%,
+        rgb(var(--glow) / 0.05),
+        transparent 55%
+      );
+    background-attachment: fixed;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--scrollbar-thumb));
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-line rounded-xl shadow-soft;
+  }
+
+  .mono {
+    @apply font-mono tracking-tight;
+  }
+
+  /* Número do pedido em destaque (mono) com acento roxo */
+  .pedido-num {
+    @apply font-mono text-accent-2 tracking-tight;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-secondary transition-colors;
+  }
+  .nav-link:hover {
+    @apply text-primary bg-surface-2;
+  }
+  .nav-link-active {
+    @apply text-accent-2 bg-accent-soft;
+  }
+}
